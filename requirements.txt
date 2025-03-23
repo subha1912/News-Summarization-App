@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+textblob
+spacy
+gtts
+requests
+streamlit
+gradio
+newspaper3k
+beautifulsoup4
+lxml
+matplotlib
+pandas
