@@ -17,14 +17,14 @@ from utils.topic_modeling import extract_topics
 from utils.hindi_tts import generate_hindi_tts
 
 def main():
-    st.title("📰 News Summarization & Text-to-Speech Application")
+    st.title(" News Summarization & Text-to-Speech Application")
 
-    # ✅ User Input for Company Name
+    #  User Input for Company Name
     company_name = st.text_input("Enter Company Name", "Tesla")
 
     if st.button("Fetch News"):
         if company_name.strip():
-            news_articles = fetch_news(company_name)  # ✅ Fetch news dynamically
+            news_articles = fetch_news(company_name)  # Fetch news dynamically
             
             if news_articles:
                 all_summaries = []
@@ -32,17 +32,17 @@ def main():
                 all_topics = []
                 processed_articles = []  # Store structured articles
 
-                # ✅ Process each article
-                for idx, article in enumerate(news_articles[:5], 1):  # ✅ Limit to 5 articles
+                #  Process each article
+                for idx, article in enumerate(news_articles[:10], 1):  #  Limit to 5 articles
                     summary = summarize_text(article.get('description', 'No description available'))
                     sentiment = analyze_sentiment(summary)
-                    topics = extract_topics([summary])  # ✅ Extract real topics
+                    topics = extract_topics([summary])  #  Extract real topics
 
                     all_summaries.append(summary)
                     sentiments.append(sentiment)
                     all_topics.extend(topics)
 
-                    # ✅ Store processed articles for JSON output
+                    #  Store processed articles for JSON output
                     processed_articles.append({
                         "Title": article.get('title', 'No Title'),
                         "Summary": summary,
@@ -50,7 +50,7 @@ def main():
                         "Topics": topics
                     })
 
-                    # ✅ Display Each Article
+                    #  Display Each Article
                     st.subheader(f" Article {idx}: {article.get('title', 'No Title')}")
                     st.write(f" **Summary:** {summary}")
                     st.write(f" **Sentiment:** {sentiment}")
@@ -58,7 +58,7 @@ def main():
                     st.write(f" [Read More]({article.get('url', '#')})")
                     st.write("---")
 
-                # ✅ Comparative Sentiment Analysis
+                #  Comparative Sentiment Analysis
                 sentiment_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
                 for article in processed_articles:
                     sentiment_counts[article["Sentiment"]] += 1
@@ -70,12 +70,12 @@ def main():
                     "Neutral": round((sentiment_counts["Neutral"] / total_articles) * 100, 2)
                 } if total_articles > 0 else {"Positive": 0, "Negative": 0, "Neutral": 0}
 
-                st.subheader("📊 Comparative Sentiment Score")
+                st.subheader(" Comparative Sentiment Score")
                 st.write(f" **Positive:** {sentiment_distribution['Positive']}%")
                 st.write(f" **Negative:** {sentiment_distribution['Negative']}%")
                 st.write(f" **Neutral:** {sentiment_distribution['Neutral']}%")
 
-                # ✅ Dynamic Coverage Differences
+                #  Dynamic Coverage Differences
                 positive_articles = [a['Summary'] for a in processed_articles if a['Sentiment'] == "Positive"]
                 negative_articles = [a['Summary'] for a in processed_articles if a['Sentiment'] == "Negative"]
 
@@ -88,16 +88,16 @@ def main():
                     coverage_differences["Comparison"] = f"Some articles highlight {positive_articles[0][:100]}..., while others focus on {negative_articles[0][:100]}..."
                     coverage_differences["Impact"] = "Positive news attracts investors, whereas negative news raises concerns."
 
-                st.subheader("📌 Coverage Differences")
+                st.subheader(" Coverage Differences")
                 st.write(f"**Comparison:** {coverage_differences['Comparison']}")
                 st.write(f"**Impact:** {coverage_differences['Impact']}")
 
-                # ✅ Topic Overlap Analysis (Using Real Words)
-                common_topics = list(set(all_topics))[:3]  # ✅ Extract top 3 common topics
+                # Topic Overlap Analysis (Using Real Words)
+                common_topics = list(set(all_topics))[:3]  #  Extract top 3 common topics
                 unique_topics_1 = list(set(all_topics[:2]))  # Unique to first few articles
                 unique_topics_2 = list(set(all_topics[2:]))  # Unique to later articles
                 
-                st.subheader("📍 Topic Overlap")
+                st.subheader(" Topic Overlap")
                 st.write("**Common Topics Across Articles:**")
                 st.write(", ".join(common_topics) if common_topics else "No common topics found")
 
@@ -107,7 +107,7 @@ def main():
                 st.write("**Unique Topics in Later Articles:**")
                 st.write(", ".join(unique_topics_2) if unique_topics_2 else "No unique topics")
 
-                # ✅ Dynamic Final Sentiment Summary
+                #  Dynamic Final Sentiment Summary
                 final_sentiment_text = f"For {company_name}, {sentiment_distribution['Positive']}% of the news is positive, {sentiment_distribution['Negative']}% is negative, and {sentiment_distribution['Neutral']}% is neutral."
 
                 if sentiment_distribution["Positive"] > sentiment_distribution["Negative"]:
@@ -117,15 +117,15 @@ def main():
                 else:
                     final_sentiment_text += " The sentiment is fairly balanced, with no strong trend in either direction."
 
-                st.subheader("📝 Final Sentiment Analysis")
+                st.subheader(" Final Sentiment Analysis")
                 st.write(final_sentiment_text)
 
-                # ✅ Generate Hindi Speech for Sentiment Summary
-                if st.button("🔊 Play Sentiment Summary in Hindi"):
+                #  Generate Hindi Speech for Sentiment Summary
+                if st.button(" Play Sentiment Summary in Hindi"):
                     speech_file = generate_hindi_tts(final_sentiment_text)
                     st.audio(speech_file, format="audio/mp3")
 
-                # ✅ JSON Output
+                #  JSON Output
                 final_output = {
                     "Company": company_name,
                     "Articles": processed_articles,
@@ -141,7 +141,7 @@ def main():
                     "Final Sentiment Analysis": final_sentiment_text
                 }
 
-                st.subheader("📝 JSON Output (For Reference)")
+                st.subheader(" JSON Output (For Reference)")
                 st.json(final_output)
 
             else:
