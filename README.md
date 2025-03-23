@@ -51,20 +51,7 @@ streamlit run app/main.py
  Public Opinion Research → Analyze people's sentiments on current events.
  Voice Accessibility → Convert important news summaries into Hindi speech for users.
 
-📂 Akaike-Internship-Assignment/
-│── 📜 README.md
-│── 📜 requirements.txt
-│── 📂 app/
-│    ├── 📜 main.py
-│── 📂 utils/
-│    ├── 📜 sentiment_analysis.py
-│    ├── 📜 tts.py
-│    ├── 📜 news_processing.py
-│── 📂 api/
-│    ├── 📜 news_fetcher.py
-│    ├── 📜 server.py
-│── 📂 output/
-│    ├── 📜 sample_output.json
+
 
 
 
